@@ -25,7 +25,19 @@ namespace TestProject1
             return result;
         }
 
-        internal static Dictionary<int, EValueType> ClassifyNumbers(int[] sourceArr)
+        internal static Dictionary<int, EValueType> FillDictionaryFromSource(int[] sourceArr)
+        {
+            Dictionary<int, EValueType> result = new Dictionary<int, EValueType>();
+
+            return result;
+        }
+
+        internal static int CountDictionaryRegistriesWithValueType(EValueType type)
+        {
+            return 0;
+        }
+
+        internal static Dictionary<int, EValueType> SortDictionaryRegistries(Dictionary<int, EValueType> sourceDict)
         {
             Dictionary<int, EValueType> result = new Dictionary<int, EValueType>();
 
