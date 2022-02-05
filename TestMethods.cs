@@ -13,14 +13,9 @@ namespace TestProject1
             Prime
         }
 
-        internal static int[] GetNextGreaterValue(Stack<int> sourceStack)
+        internal static Stack<int> GetNextGreaterValue(Stack<int> sourceStack)
         {
-            if (sourceStack == null)
-            {
-                return null;
-            }
-
-            int[] result = new int[sourceStack.Count];
+            Stack<int> result = new Stack<int>();
 
             return result;
         }

@@ -8,22 +8,29 @@ namespace TestProject1
         #region IntStacks
 
         private Stack<int> testStackA;
+        private Stack<int> testStackResultA;
         private int[] testStackElementsA = { 26, 3, 6, 5 };
-        private int[] testStackResultA = { -1, 6, -1, -1 };
+        private int[] testStackResultElementsA = { -1, 6, -1, -1 };
 
         private Stack<int> testStackB;
+        private Stack<int> testStackResultB;
         private int[] testStackElementsB = { 14, 8, 7, 13 };
-        private int[] testStackResultB = { -1, 13, 13, -1 };
+        private int[] testStackResultElementsB = { -1, 13, 13, -1 };
+
+        private Stack<int> testSortedStack;
+        private Stack<int> testSortedStackResult;
+        private int[] testSortedStackElements = { 20, 15, 4, 3 };
+        private int[] testSortedStackResultElements = { -1, -1, -1, -1 };
 
         #endregion IntStacks
-
-        #region Dictionaries
-        #endregion
 
         private void PopulateTestNGVStacks()
         {
             testStackA.Populate(testStackElementsA);
+            testStackResultA.Populate(testStackResultElementsA);
             testStackB.Populate(testStackElementsB);
+            testStackResultA.Populate(testStackResultElementsB);
+            testSortedStackResult.Populate(testSortedStackResultElements);
         }
 
         private void ClearNGVStacks()
@@ -42,22 +49,54 @@ namespace TestProject1
         {
         }
 
+        /// <summary>
+        /// Tests TestMethods.GetNextGreaterValue()
+        /// </summary>
         [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
-
-        [Test]
-        public void TestNGV()
+        public void TestGetNextGreaterValue()
         {
             Assert.AreEqual(testStackResultA, TestMethods.GetNextGreaterValue(testStackA));
             Assert.AreEqual(testStackResultB, TestMethods.GetNextGreaterValue(testStackB));
+            Assert.AreEqual(testSortedStackResult, TestMethods.GetNextGreaterValue(testSortedStack));
+
+            Assert.AreEqual(-1, TestMethods.GetNextGreaterValue(testStackA).Peek());
+            Assert.AreEqual(-1, TestMethods.GetNextGreaterValue(testStackB).Peek());
         }
 
+        /// <summary>
+        /// Tests TestMethods.FillDictionaryFromSource
+        /// </summary>
         [Test]
-        public void TestClassifyNumbers()
-        { 
+        public void TestFillDictionaryFromSource()
+        {
         }
+
+        /// <summary>
+        /// Tests TestMethods.CountDictionaryRegistriesWithValueType
+        /// </summary>
+        [Test]
+        public void TestCountDictionaryRegistriesWithValueType()
+        { }
+
+        /// <summary>
+        /// Tests TestMethods.SortDictionaryRegistries
+        /// </summary>
+        [Test]
+        public void TestSortDictionaryRegistries()
+        { }
+
+        /// <summary>
+        /// Tests TestMethods.ClassifyTickets
+        /// </summary>
+        [Test]
+        public void TestClassifyTickets()
+        { }
+
+        /// <summary>
+        /// Tests TestMethods.AddNewTicket
+        /// </summary>
+        [Test]
+        public void TestAddNewTicket()
+        { }
     }
 }
