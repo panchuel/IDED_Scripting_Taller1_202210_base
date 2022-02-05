@@ -5,7 +5,7 @@ namespace TestProject1
 {
     public class Tests
     {
-        #region IntStacks
+        #region Stacks
 
         private Stack<int> testStackA;
         private Stack<int> testStackResultA;
@@ -22,9 +22,44 @@ namespace TestProject1
         private int[] testSortedStackElements = { 20, 15, 4, 3 };
         private int[] testSortedStackResultElements = { -1, -1, -1, -1 };
 
-        #endregion IntStacks
+        #endregion Stacks
+
+        #region ServiceCenterStructures
+        private List<Ticket> tickets = new List<Ticket> 
+        {
+            new Ticket(Ticket.ERequestType.Payment, 30),
+            new Ticket(Ticket.ERequestType.Cancellation, 24),
+            new Ticket(Ticket.ERequestType.Cancellation, 50),
+            new Ticket(Ticket.ERequestType.Subscription, 99),
+            new Ticket(Ticket.ERequestType.Payment, 31),
+            new Ticket(Ticket.ERequestType.Subscription, 30),
+            new Ticket(Ticket.ERequestType.Payment, 80),
+            new Ticket(Ticket.ERequestType.Cancellation, 1),
+            new Ticket(Ticket.ERequestType.Subscription, 30),
+            new Ticket(Ticket.ERequestType.Cancellation, 80),
+            new Ticket(Ticket.ERequestType.Payment, 10),
+            new Ticket(Ticket.ERequestType.Payment, 6),
+            new Ticket(Ticket.ERequestType.Cancellation, 39),
+            new Ticket(Ticket.ERequestType.Subscription, 95),
+            new Ticket(Ticket.ERequestType.Subscription, 43),
+            new Ticket(Ticket.ERequestType.Cancellation, 70),
+            new Ticket(Ticket.ERequestType.Payment, 15),
+            new Ticket(Ticket.ERequestType.Payment, 41),
+            new Ticket(Ticket.ERequestType.Subscription, 66),
+            new Ticket(Ticket.ERequestType.Cancellation, 3),
+
+        };
+
+        Ticket[] paymentTickets = { };
+        private Queue<Ticket> PaymentQueue;
+        Ticket[] subscriptionTickets = { };
+        private Queue<Ticket> subscriptionQueue;
+        Ticket[] cancellationTickets = { };
+        private Queue<Ticket> cancellationQueue;
+        #endregion ServiceCenterStructures
 
         private void PopulateTestNGVStacks()
+
         {
             testStackA.Populate(testStackElementsA);
             testStackResultA.Populate(testStackResultElementsA);
@@ -37,6 +72,13 @@ namespace TestProject1
         {
             testStackA.Clear();
             testStackB.Clear();
+        }
+
+        private void PopulateTicketCollections()
+        {
+            PaymentQueue.Populate(paymentTickets);
+            subscriptionQueue.Populate(subscriptionTickets);
+            cancellationQueue.Populate(cancellationTickets);
         }
 
         [SetUp]

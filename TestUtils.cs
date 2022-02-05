@@ -30,6 +30,19 @@ namespace TestProject1
             }
         }
 
+        internal static void Populate<T>(this Queue<T> queue, T[] elements)
+        {
+            if (queue == null)
+            {
+                queue = new Queue<T>();
+            }
+
+            for (int i = 0; i < elements.Length; i++)
+            {
+                queue.Enqueue(elements[i]);
+            }
+        }
+
         internal static void InitializeQueueCollection<T>(this Queue<T>[] collection, int lenght)
         {
             if (collection == null)

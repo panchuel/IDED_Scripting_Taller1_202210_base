@@ -4,7 +4,7 @@
     {
         internal enum ERequestType
         {
-            Suscription,
+            Subscription,
             Payment,
             Cancellation
         }
