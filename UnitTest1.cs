@@ -25,7 +25,8 @@ namespace TestProject1
         #endregion Stacks
 
         #region ServiceCenterStructures
-        private List<Ticket> tickets = new List<Ticket> 
+
+        private List<Ticket> tickets = new List<Ticket>
         {
             new Ticket(Ticket.ERequestType.Payment, 30),
             new Ticket(Ticket.ERequestType.Cancellation, 24),
@@ -47,15 +48,15 @@ namespace TestProject1
             new Ticket(Ticket.ERequestType.Payment, 41),
             new Ticket(Ticket.ERequestType.Subscription, 66),
             new Ticket(Ticket.ERequestType.Cancellation, 3),
-
         };
 
-        Ticket[] paymentTickets = { };
+        private Ticket[] paymentTickets = { };
         private Queue<Ticket> PaymentQueue;
-        Ticket[] subscriptionTickets = { };
+        private Ticket[] subscriptionTickets = { };
         private Queue<Ticket> subscriptionQueue;
-        Ticket[] cancellationTickets = { };
+        private Ticket[] cancellationTickets = { };
         private Queue<Ticket> cancellationQueue;
+
         #endregion ServiceCenterStructures
 
         private void PopulateTestNGVStacks()
