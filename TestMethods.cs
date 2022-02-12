@@ -27,7 +27,7 @@ namespace TestProject1
             return result;
         }
 
-        internal static int CountDictionaryRegistriesWithValueType(EValueType type)
+        internal static int CountDictionaryRegistriesWithValueType(Dictionary<int, EValueType> sourceDict, EValueType type)
         {
             return 0;
         }
