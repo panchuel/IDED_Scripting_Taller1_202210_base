@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using static TestProject1.TestMethods;
+using static TestProject1.Ticket;
 
 namespace TestProject1
 {
@@ -9,17 +10,19 @@ namespace TestProject1
         #region Stacks
 
         private Stack<int> testStackA;
+        private Stack<int> testStackB;
+        private Stack<int> testSortedStack;
+
         private Stack<int> testStackResultA;
+        private Stack<int> testStackResultB;
+        private Stack<int> testSortedStackResult;
+
         private readonly int[] testStackElementsA = { 26, 3, 6, 5 };
         private readonly int[] testStackResultElementsA = { -1, 6, -1, -1 };
 
-        private Stack<int> testStackB;
-        private Stack<int> testStackResultB;
         private readonly int[] testStackElementsB = { 14, 8, 7, 13 };
         private readonly int[] testStackResultElementsB = { -1, 13, 13, -1 };
 
-        private Stack<int> testSortedStack;
-        private Stack<int> testSortedStackResult;
         private readonly int[] testSortedStackElements = { 20, 15, 4, 3 };
         private readonly int[] testSortedStackResultElements = { -1, -1, -1, -1 };
 
@@ -30,10 +33,6 @@ namespace TestProject1
         private Dictionary<int, EValueType> testDict1;
         private Dictionary<int, EValueType> testDict2;
         private Dictionary<int, EValueType> testDict3;
-
-        private Dictionary<int, EValueType> sortedTestDict1;
-        private Dictionary<int, EValueType> sortedTestDict2;
-        private Dictionary<int, EValueType> sortedTestDict3;
 
         private readonly int[] testDict1Elements = { 10, 4, 5, 3, 9, 34, 8, 13, 7 };
         private readonly int[] testDict2Elements = { 11, 23, 41, 61, 7, 20, 40, 99 };
@@ -79,81 +78,129 @@ namespace TestProject1
 
         private readonly Dictionary<int, EValueType> sortedResultDict1 = new Dictionary<int, EValueType>()
         {
-            { 10, EValueType.Two },
-            { 4, EValueType.Two },
-            { 5, EValueType.Five },
-            { 3, EValueType.Three },
-            { 9, EValueType.Three },
             { 34, EValueType.Two },
-            { 8, EValueType.Two },
             { 13, EValueType.Prime },
-            { 7, EValueType.Seven }
+            { 10, EValueType.Two },
+            { 9, EValueType.Three },
+            { 8, EValueType.Two },
+            { 7, EValueType.Seven },
+            { 5, EValueType.Five },
+            { 4, EValueType.Two },
+            { 3, EValueType.Three },
         };
 
         private readonly Dictionary<int, EValueType> sortedResultDict2 = new Dictionary<int, EValueType>()
         {
-            { 11, EValueType.Prime },
-            { 23, EValueType.Prime },
-            { 41, EValueType.Prime },
-            { 61, EValueType.Prime },
-            { 7, EValueType.Seven },
-            { 20, EValueType.Two },
-            { 40, EValueType.Two },
             { 99, EValueType.Three },
+            { 61, EValueType.Prime },
+            { 41, EValueType.Prime },
+            { 40, EValueType.Two },
+            { 23, EValueType.Prime },
+            { 20, EValueType.Two },
+            { 11, EValueType.Prime },
+            { 7, EValueType.Seven },
         };
 
         private readonly Dictionary<int, EValueType> sortedResultDict3 = new Dictionary<int, EValueType>()
         {
+            { 105, EValueType.Three },
+            { 56, EValueType.Two },
+            { 45, EValueType.Five },
             { 30, EValueType.Five },
             { 25, EValueType.Five },
-            { 45, EValueType.Five },
-            { 8, EValueType.Two },
-            { 56, EValueType.Two },
-            { 105, EValueType.Three },
             { 21, EValueType.Three },
-            { 1, EValueType.Prime },
+            { 8, EValueType.Two },
             { 2, EValueType.Two },
+            { 1, EValueType.Prime },
         };
 
         #endregion ClassifiedDictionary
 
         #region ServiceCenterStructures
 
-        private List<Ticket> testTicketElements = new List<Ticket>
+        private Queue<Ticket> resultPaymentQueue;
+        private Queue<Ticket> resultSubscriptionQueue;
+        private Queue<Ticket> resultCancellationQueue;
+
+        private readonly List<Ticket> testTicketElements = new List<Ticket>
         {
-            new Ticket(Ticket.ERequestType.Payment, 30),
-            new Ticket(Ticket.ERequestType.Cancellation, 24),
-            new Ticket(Ticket.ERequestType.Cancellation, 50),
-            new Ticket(Ticket.ERequestType.Subscription, 99),
-            new Ticket(Ticket.ERequestType.Payment, 31),
-            new Ticket(Ticket.ERequestType.Subscription, 30),
-            new Ticket(Ticket.ERequestType.Payment, 80),
-            new Ticket(Ticket.ERequestType.Cancellation, 1),
-            new Ticket(Ticket.ERequestType.Subscription, 30),
-            new Ticket(Ticket.ERequestType.Cancellation, 80),
-            new Ticket(Ticket.ERequestType.Payment, 10),
-            new Ticket(Ticket.ERequestType.Payment, 6),
-            new Ticket(Ticket.ERequestType.Cancellation, 39),
-            new Ticket(Ticket.ERequestType.Subscription, 95),
-            new Ticket(Ticket.ERequestType.Subscription, 43),
-            new Ticket(Ticket.ERequestType.Cancellation, 70),
-            new Ticket(Ticket.ERequestType.Payment, 15),
-            new Ticket(Ticket.ERequestType.Payment, 41),
-            new Ticket(Ticket.ERequestType.Subscription, 66),
-            new Ticket(Ticket.ERequestType.Cancellation, 3),
+            new Ticket(ERequestType.Payment, 30),
+            new Ticket(ERequestType.Cancellation, 24),
+            new Ticket(ERequestType.Cancellation, 50),
+            new Ticket(ERequestType.Subscription, 99),
+            new Ticket(ERequestType.Payment, 31),
+            new Ticket(ERequestType.Subscription, 30),
+            new Ticket(ERequestType.Payment, 80),
+            new Ticket(ERequestType.Cancellation, 1),
+            new Ticket(ERequestType.Subscription, 30),
+            new Ticket(ERequestType.Cancellation, 80),
+            new Ticket(ERequestType.Payment, 10),
+            new Ticket(ERequestType.Payment, 6),
+            new Ticket(ERequestType.Cancellation, 39),
+            new Ticket(ERequestType.Subscription, 95),
+            new Ticket(ERequestType.Subscription, 43),
+            new Ticket(ERequestType.Cancellation, 70),
+            new Ticket(ERequestType.Payment, 15),
+            new Ticket(ERequestType.Payment, 41),
+            new Ticket(ERequestType.Subscription, 66),
+            new Ticket(ERequestType.Cancellation, 3),
         };
 
-        private Ticket[] paymentTickets = { };
-        private Queue<Ticket> PaymentQueue;
-        private Ticket[] subscriptionTickets = { };
-        private Queue<Ticket> subscriptionQueue;
-        private Ticket[] cancellationTickets = { };
-        private Queue<Ticket> cancellationQueue;
+        private Ticket[] resultPaymentTicketElements =
+        {
+            new Ticket(ERequestType.Payment, 6),
+            new Ticket(ERequestType.Payment, 10),
+            new Ticket(ERequestType.Payment, 15),
+            new Ticket(ERequestType.Payment, 30),
+            new Ticket(ERequestType.Payment, 31),
+            new Ticket(ERequestType.Payment, 41),
+            new Ticket(ERequestType.Payment, 80),
+        };
+
+        private Ticket[] resultSubscriptionTicketElements =
+        {
+            new Ticket(ERequestType.Subscription, 30),
+            new Ticket(ERequestType.Subscription, 43),
+            new Ticket(ERequestType.Subscription, 66),
+            new Ticket(ERequestType.Subscription, 80),
+            new Ticket(ERequestType.Subscription, 95),
+            new Ticket(ERequestType.Subscription, 99),
+        };
+
+        private Ticket[] resultCancellationTicketElements =
+        {
+            new Ticket(ERequestType.Cancellation, 1),
+            new Ticket(ERequestType.Cancellation, 3),
+            new Ticket(ERequestType.Cancellation, 24),
+            new Ticket(ERequestType.Cancellation, 39),
+            new Ticket(ERequestType.Cancellation, 50),
+            new Ticket(ERequestType.Cancellation, 70),
+            new Ticket(ERequestType.Cancellation, 80),
+        };
 
         #endregion ServiceCenterStructures
 
-        private void PopulateTestNGVStacks()
+        private void ClearNGVStacks()
+        {
+            testStackA.Clear();
+            testStackB.Clear();
+        }
 
+        private void ClearQueues()
+        {
+            resultPaymentQueue.Clear();
+            resultSubscriptionQueue.Clear();
+            resultCancellationQueue.Clear();
+        }
+
+        private void ClearDictionaries()
+        {
+            testDict1.Clear();
+            testDict2.Clear();
+            testDict3.Clear();
+        }
+
+        private void PopulateTestNGVStacks()
         {
             testStackA.Populate(testStackElementsA);
             testStackResultA.Populate(testStackResultElementsA);
@@ -162,27 +209,20 @@ namespace TestProject1
             testSortedStackResult.Populate(testSortedStackResultElements);
         }
 
-        private void ClearNGVStacks()
-        {
-            testStackA.Clear();
-            testStackB.Clear();
-        }
-
         private void PopulateTicketCollections()
         {
-            PaymentQueue.Populate(paymentTickets);
-            subscriptionQueue.Populate(subscriptionTickets);
-            cancellationQueue.Populate(cancellationTickets);
-        }
-
-        [SetUp]
-        public void Setup()
-        {
+            resultPaymentQueue.Populate(resultPaymentTicketElements);
+            resultSubscriptionQueue.Populate(resultSubscriptionTicketElements);
+            resultCancellationQueue.Populate(resultCancellationTicketElements);
         }
 
         [TearDown]
-        public void Reset()
+        public void ClearAllStructures()
         {
+            ClearNGVStacks();
+            ClearDictionaries();
+            ClearQueues();
+            ClearQueues();
         }
 
         /// <summary>
@@ -191,12 +231,14 @@ namespace TestProject1
         [Test]
         public void TestGetNextGreaterValue()
         {
-            Assert.AreEqual(testStackResultA, TestMethods.GetNextGreaterValue(testStackA));
-            Assert.AreEqual(testStackResultB, TestMethods.GetNextGreaterValue(testStackB));
-            Assert.AreEqual(testSortedStackResult, TestMethods.GetNextGreaterValue(testSortedStack));
+            PopulateTestNGVStacks();
 
-            Assert.AreEqual(-1, TestMethods.GetNextGreaterValue(testStackA).Peek());
-            Assert.AreEqual(-1, TestMethods.GetNextGreaterValue(testStackB).Peek());
+            Assert.AreEqual(testStackResultA, GetNextGreaterValue(testStackA));
+            Assert.AreEqual(testStackResultB, GetNextGreaterValue(testStackB));
+            Assert.AreEqual(testSortedStackResult, GetNextGreaterValue(testSortedStack));
+
+            Assert.AreEqual(-1, GetNextGreaterValue(testStackA).Peek());
+            Assert.AreEqual(-1, GetNextGreaterValue(testStackB).Peek());
         }
 
         /// <summary>
@@ -205,6 +247,10 @@ namespace TestProject1
         [Test]
         public void TestFillDictionaryFromSource()
         {
+            testDict1 = FillDictionaryFromSource(testDict1Elements);
+            testDict2 = FillDictionaryFromSource(testDict2Elements);
+            testDict3 = FillDictionaryFromSource(testDict3Elements);
+
             // Tests dictionaries are filled as expected.
             Assert.AreEqual(testDict1, resultDict1);
             Assert.AreEqual(testDict2, resultDict2);
@@ -230,6 +276,10 @@ namespace TestProject1
         [Test]
         public void TestCountDictionaryRegistriesWithValueType()
         {
+            testDict1 = FillDictionaryFromSource(testDict1Elements);
+            testDict2 = FillDictionaryFromSource(testDict2Elements);
+            testDict3 = FillDictionaryFromSource(testDict3Elements);
+
             Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict1, EValueType.Two), 4);
             Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict1, EValueType.Five), 1);
             Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict1, EValueType.Three), 2);
@@ -248,20 +298,56 @@ namespace TestProject1
         /// </summary>
         [Test]
         public void TestSortDictionaryRegistries()
-        { }
+        {
+            Assert.AreEqual(SortDictionaryRegistries(testDict1), sortedResultDict1);
+            Assert.AreEqual(SortDictionaryRegistries(testDict2), sortedResultDict2);
+            Assert.AreEqual(SortDictionaryRegistries(testDict3), sortedResultDict3);
+        }
 
         /// <summary>
         /// Tests TestMethods.ClassifyTickets
         /// </summary>
         [Test]
         public void TestClassifyTickets()
-        { }
+        {
+            PopulateTicketCollections();
+
+            Queue<Ticket>[] resultQueues = { resultPaymentQueue, resultSubscriptionQueue, resultCancellationQueue };
+
+            // Tests queues array has been correctly initialized and filled
+            Queue<Ticket>[] testedQueues = ClassifyTickets(testTicketElements);
+            Assert.IsNotEmpty(testedQueues);
+            Assert.IsTrue(testedQueues.Length == 3);
+
+            // Test each queue has the same elements in the same order
+            Assert.IsTrue(testedQueues[0].HasSameElementsAtIndeces(resultPaymentQueue));
+            Assert.IsTrue(testedQueues[1].HasSameElementsAtIndeces(resultSubscriptionQueue));
+            Assert.IsTrue(testedQueues[2].HasSameElementsAtIndeces(resultCancellationQueue));
+        }
 
         /// <summary>
         /// Tests TestMethods.AddNewTicket
         /// </summary>
         [Test]
         public void TestAddNewTicket()
-        { }
+        {
+            Queue<Ticket>[] resultQueues = ClassifyTickets(testTicketElements);
+
+            // Tests cannot add a turn higher than 99
+            Assert.IsFalse(AddNewTicket(resultQueues[0], new Ticket(ERequestType.Payment, 100)));
+
+            // Tests cannot add tickets of a different ERequestType in each queue
+            Assert.IsTrue(AddNewTicket(resultQueues[0], new Ticket(ERequestType.Payment, 75)));
+            Assert.IsTrue(AddNewTicket(resultQueues[0], new Ticket(ERequestType.Payment, 8)));
+            Assert.IsFalse(AddNewTicket(resultQueues[0], new Ticket(ERequestType.Cancellation, 1)));
+
+            Assert.IsTrue(AddNewTicket(resultQueues[1], new Ticket(ERequestType.Subscription, 15)));
+            Assert.IsTrue(AddNewTicket(resultQueues[1], new Ticket(ERequestType.Subscription, 80)));
+            Assert.False(AddNewTicket(resultQueues[1], new Ticket(ERequestType.Payment, 30)));
+
+            Assert.IsFalse(AddNewTicket(resultQueues[2], new Ticket(ERequestType.Payment, 6)));
+            Assert.IsFalse(AddNewTicket(resultQueues[2], new Ticket(ERequestType.Payment, 1)));
+            Assert.IsTrue(AddNewTicket(resultQueues[2], new Ticket(ERequestType.Cancellation, 50)));
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TestProject1
 {
@@ -54,6 +55,26 @@ namespace TestProject1
             {
                 collection[i] = new Queue<T>();
             }
+        }
+
+        internal static bool HasSameElementsAtIndeces<T>(this Queue<T> sourceCollection, Queue<T> targetCollection)
+        {
+            bool result = sourceCollection.Count == targetCollection.Count;
+
+            if (result)
+            {
+                for (int i = 0; i < sourceCollection.Count; i++)
+                {
+                    result = sourceCollection.ElementAt(i).Equals(targetCollection.ElementAt(i));
+
+                    if (!result)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

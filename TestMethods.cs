@@ -42,16 +42,15 @@ namespace TestProject1
         internal static Queue<Ticket>[] ClassifyTickets(List<Ticket> sourceList)
         {
             Queue<Ticket>[] result = null;
-            result.InitializeQueueCollection(3);
 
             return result;
         }
 
-        internal static bool AddNewTicket(Ticket ticket, Queue<Ticket> targetQueue)
+        internal static bool AddNewTicket(Queue<Ticket> targetQueue, Ticket ticket)
         {
             bool result = false;
 
             return result;
-        }
+        }        
     }
 }
