@@ -48,7 +48,7 @@ namespace TestProject1
 
         internal static bool AddNewTicket(Queue<Ticket> targetQueue, Ticket ticket)
         {
-            bool result = false;
+            bool result = true;
 
             return result;
         }        
