@@ -233,9 +233,9 @@ namespace TestProject1
         {
             PopulateTestNGVStacks();
 
-            Assert.AreEqual(testStackResultA, GetNextGreaterValue(testStackA));
-            Assert.AreEqual(testStackResultB, GetNextGreaterValue(testStackB));
-            Assert.AreEqual(testSortedStackResult, GetNextGreaterValue(testSortedStack));
+            Assert.IsTrue(testStackResultA.HasSameElementsAtIndeces(GetNextGreaterValue(testStackA)));
+            Assert.IsTrue(testStackResultB.HasSameElementsAtIndeces(GetNextGreaterValue(testStackB)));
+            Assert.IsTrue(testSortedStackResult.HasSameElementsAtIndeces(GetNextGreaterValue(testSortedStack)));
 
             Assert.AreEqual(-1, GetNextGreaterValue(testStackA).Peek());
             Assert.AreEqual(-1, GetNextGreaterValue(testStackB).Peek());

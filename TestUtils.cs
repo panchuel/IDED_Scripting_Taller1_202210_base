@@ -96,5 +96,25 @@ namespace TestProject1
 
             return result;
         }
+
+        internal static bool HasSameElementsAtIndeces<T>(this Stack<T> sourceStack, Stack<T> targetStack)
+        {
+            bool result = sourceStack.Count == targetStack.Count;
+
+            if (result)
+            {
+                for (int i = 0; i < sourceStack.Count; i++)
+                {
+                    result = sourceStack.ElementAt(i).Equals(targetStack.ElementAt(i));
+
+                    if (!result)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return result;s
+        }
     }
 }
