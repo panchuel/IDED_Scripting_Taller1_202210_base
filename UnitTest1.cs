@@ -252,9 +252,9 @@ namespace TestProject1
             testDict3 = FillDictionaryFromSource(testDict3Elements);
 
             // Tests dictionaries are filled as expected.
-            Assert.AreEqual(testDict1, resultDict1);
-            Assert.AreEqual(testDict2, resultDict2);
-            Assert.AreEqual(testDict3, resultDict3);
+            Assert.IsTrue(testDict1.HasSameElementsAtIndeces(resultDict1));
+            Assert.IsTrue(testDict2.HasSameElementsAtIndeces(resultDict2));
+            Assert.IsTrue(testDict3.HasSameElementsAtIndeces(resultDict3));
 
             // Tests dictionary keys are associated with the correct value
             Assert.IsTrue(testDict1.GetValueOrDefault(13) == EValueType.Prime);
@@ -299,9 +299,9 @@ namespace TestProject1
         [Test]
         public void TestSortDictionaryRegistries()
         {
-            Assert.AreEqual(SortDictionaryRegistries(testDict1), sortedResultDict1);
-            Assert.AreEqual(SortDictionaryRegistries(testDict2), sortedResultDict2);
-            Assert.AreEqual(SortDictionaryRegistries(testDict3), sortedResultDict3);
+            Assert.IsTrue(SortDictionaryRegistries(testDict1).HasSameElementsAtIndeces(sortedResultDict1));
+            Assert.IsTrue(SortDictionaryRegistries(testDict2).HasSameElementsAtIndeces(sortedResultDict2));
+            Assert.IsTrue(SortDictionaryRegistries(testDict3).HasSameElementsAtIndeces(sortedResultDict3));
         }
 
         /// <summary>
