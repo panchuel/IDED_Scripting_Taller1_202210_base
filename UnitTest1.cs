@@ -261,7 +261,7 @@ namespace TestProject1
 
             Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict3, EValueType.Five), 1);
             Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict3, EValueType.Two), 4);
-            Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict3, EValueType.Three), 2);
+            Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict3, EValueType.Three), 3);
         }
 
         /// <summary>
