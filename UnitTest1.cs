@@ -36,7 +36,7 @@ namespace TestProject1
 
         private readonly int[] testDict1Elements = { 10, 4, 5, 3, 9, 34, 8, 13, 7 };
         private readonly int[] testDict2Elements = { 11, 23, 41, 61, 7, 20, 40, 99 };
-        private readonly int[] testDict3Elements = { 30, 25, 45, 8, 56, 105, 1, 2 };
+        private readonly int[] testDict3Elements = { 30, 25, 45, 8, 56, 105, 21, 1, 2 };
 
         private readonly Dictionary<int, EValueType> resultDict1 = new Dictionary<int, EValueType>()
         {
@@ -65,9 +65,9 @@ namespace TestProject1
 
         private readonly Dictionary<int, EValueType> resultDict3 = new Dictionary<int, EValueType>()
         {
-            { 30, EValueType.Five },
+            { 30, EValueType.Two },
             { 25, EValueType.Five },
-            { 45, EValueType.Five },
+            { 45, EValueType.Three },
             { 8, EValueType.Two },
             { 56, EValueType.Two },
             { 105, EValueType.Three },
@@ -105,8 +105,8 @@ namespace TestProject1
         {
             { 105, EValueType.Three },
             { 56, EValueType.Two },
-            { 45, EValueType.Five },
-            { 30, EValueType.Five },
+            { 45, EValueType.Three },
+            { 30, EValueType.Two },
             { 25, EValueType.Five },
             { 21, EValueType.Three },
             { 8, EValueType.Two },
@@ -129,7 +129,7 @@ namespace TestProject1
             new Ticket(ERequestType.Cancellation, 50),
             new Ticket(ERequestType.Subscription, 99),
             new Ticket(ERequestType.Payment, 31),
-            new Ticket(ERequestType.Subscription, 30),
+            new Ticket(ERequestType.Subscription, 80),
             new Ticket(ERequestType.Payment, 80),
             new Ticket(ERequestType.Cancellation, 1),
             new Ticket(ERequestType.Subscription, 30),
@@ -180,40 +180,11 @@ namespace TestProject1
 
         #endregion ServiceCenterStructures
 
-        private void ClearNGVStacks()
+        public void PopulateTicketCollections()
         {
-            testStackA.Clear();
-            testStackB.Clear();
-        }
-
-        private void ClearQueues()
-        {
-            resultPaymentQueue.Clear();
-            resultSubscriptionQueue.Clear();
-            resultCancellationQueue.Clear();
-        }
-
-        private void ClearDictionaries()
-        {
-            testDict1.Clear();
-            testDict2.Clear();
-            testDict3.Clear();
-        }
-
-        private void PopulateTestNGVStacks()
-        {
-            testStackA.Populate(testStackElementsA);
-            testStackResultA.Populate(testStackResultElementsA);
-            testStackB.Populate(testStackElementsB);
-            testStackResultA.Populate(testStackResultElementsB);
-            testSortedStackResult.Populate(testSortedStackResultElements);
-        }
-
-        private void PopulateTicketCollections()
-        {
-            resultPaymentQueue.Populate(resultPaymentTicketElements);
-            resultSubscriptionQueue.Populate(resultSubscriptionTicketElements);
-            resultCancellationQueue.Populate(resultCancellationTicketElements);
+            TestUtils.Populate(ref resultPaymentQueue, resultPaymentTicketElements);
+            TestUtils.Populate(ref resultSubscriptionQueue, resultSubscriptionTicketElements);
+            TestUtils.Populate(ref resultCancellationQueue, resultCancellationTicketElements);
         }
 
         [TearDown]
@@ -233,9 +204,13 @@ namespace TestProject1
         {
             PopulateTestNGVStacks();
 
-            Assert.IsTrue(testStackResultA.HasSameElementsAtIndeces(GetNextGreaterValue(testStackA)));
-            Assert.IsTrue(testStackResultB.HasSameElementsAtIndeces(GetNextGreaterValue(testStackB)));
-            Assert.IsTrue(testSortedStackResult.HasSameElementsAtIndeces(GetNextGreaterValue(testSortedStack)));
+            Stack<int> resultA = GetNextGreaterValue(testStackA);
+            Stack<int> resultB = GetNextGreaterValue(testStackB);
+            Stack<int> resultSorted = GetNextGreaterValue(testSortedStack);
+
+            Assert.IsTrue(testStackResultA.HasSameElementsAtIndeces(resultA));
+            Assert.IsTrue(testStackResultB.HasSameElementsAtIndeces(resultB));
+            Assert.IsTrue(testSortedStackResult.HasSameElementsAtIndeces(resultSorted));
 
             Assert.AreEqual(-1, GetNextGreaterValue(testStackA).Peek());
             Assert.AreEqual(-1, GetNextGreaterValue(testStackB).Peek());
@@ -247,9 +222,7 @@ namespace TestProject1
         [Test]
         public void TestFillDictionaryFromSource()
         {
-            testDict1 = FillDictionaryFromSource(testDict1Elements);
-            testDict2 = FillDictionaryFromSource(testDict2Elements);
-            testDict3 = FillDictionaryFromSource(testDict3Elements);
+            FillTestDictionaries();
 
             // Tests dictionaries are filled as expected.
             Assert.IsTrue(testDict1.HasSameElementsAtIndeces(resultDict1));
@@ -276,9 +249,7 @@ namespace TestProject1
         [Test]
         public void TestCountDictionaryRegistriesWithValueType()
         {
-            testDict1 = FillDictionaryFromSource(testDict1Elements);
-            testDict2 = FillDictionaryFromSource(testDict2Elements);
-            testDict3 = FillDictionaryFromSource(testDict3Elements);
+            FillTestDictionaries();
 
             Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict1, EValueType.Two), 4);
             Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict1, EValueType.Five), 1);
@@ -288,9 +259,9 @@ namespace TestProject1
             Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict2, EValueType.Seven), 1);
             Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict2, EValueType.Prime), 4);
 
-            Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict1, EValueType.Five), 3);
-            Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict1, EValueType.Two), 3);
-            Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict1, EValueType.Three), 2);
+            Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict3, EValueType.Five), 1);
+            Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict3, EValueType.Two), 4);
+            Assert.AreEqual(CountDictionaryRegistriesWithValueType(testDict3, EValueType.Three), 2);
         }
 
         /// <summary>
@@ -299,9 +270,15 @@ namespace TestProject1
         [Test]
         public void TestSortDictionaryRegistries()
         {
-            Assert.IsTrue(SortDictionaryRegistries(testDict1).HasSameElementsAtIndeces(sortedResultDict1));
-            Assert.IsTrue(SortDictionaryRegistries(testDict2).HasSameElementsAtIndeces(sortedResultDict2));
-            Assert.IsTrue(SortDictionaryRegistries(testDict3).HasSameElementsAtIndeces(sortedResultDict3));
+            FillTestDictionaries();
+
+            Dictionary<int, EValueType> sortedDict1 = SortDictionaryRegistries(testDict1);
+            Dictionary<int, EValueType> sortedDict2 = SortDictionaryRegistries(testDict2);
+            Dictionary<int, EValueType> sortedDict3 = SortDictionaryRegistries(testDict3);
+
+            Assert.IsTrue(sortedDict1.HasSameElementsAtIndeces(sortedResultDict1));
+            Assert.IsTrue(sortedDict2.HasSameElementsAtIndeces(sortedResultDict2));
+            Assert.IsTrue(sortedDict3.HasSameElementsAtIndeces(sortedResultDict3));
         }
 
         /// <summary>
@@ -348,6 +325,43 @@ namespace TestProject1
             Assert.IsFalse(AddNewTicket(resultQueues[2], new Ticket(ERequestType.Payment, 6)));
             Assert.IsFalse(AddNewTicket(resultQueues[2], new Ticket(ERequestType.Payment, 1)));
             Assert.IsTrue(AddNewTicket(resultQueues[2], new Ticket(ERequestType.Cancellation, 50)));
+        }
+
+        private void ClearNGVStacks()
+        {
+            testStackA?.Clear();
+            testStackB?.Clear();
+        }
+
+        private void ClearQueues()
+        {
+            resultPaymentQueue?.Clear();
+            resultSubscriptionQueue?.Clear();
+            resultCancellationQueue?.Clear();
+        }
+
+        private void ClearDictionaries()
+        {
+            testDict1?.Clear();
+            testDict2?.Clear();
+            testDict3?.Clear();
+        }
+
+        private void PopulateTestNGVStacks()
+        {
+            TestUtils.Populate(ref testStackA, testStackElementsA);
+            TestUtils.Populate(ref testStackResultA, testStackResultElementsA);
+            TestUtils.Populate(ref testStackB, testStackElementsB);
+            TestUtils.Populate(ref testStackResultB, testStackResultElementsB);
+            TestUtils.Populate(ref testSortedStack, testSortedStackElements);
+            TestUtils.Populate(ref testSortedStackResult, testSortedStackResultElements);
+        }
+
+        private void FillTestDictionaries()
+        {
+            testDict1 = FillDictionaryFromSource(testDict1Elements);
+            testDict2 = FillDictionaryFromSource(testDict2Elements);
+            testDict3 = FillDictionaryFromSource(testDict3Elements);
         }
     }
 }

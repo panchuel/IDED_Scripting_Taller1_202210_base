@@ -5,7 +5,7 @@ namespace TestProject1
 {
     internal static class TestUtils
     {
-        internal static void Populate<T>(this Stack<T> stack, T[] elements)
+        internal static void Populate<T>(ref Stack<T> stack, T[] elements)
         {
             if (stack == null)
             {
@@ -31,7 +31,7 @@ namespace TestProject1
             }
         }
 
-        internal static void Populate<T>(this Queue<T> queue, T[] elements)
+        internal static void Populate<T>(ref Queue<T> queue, T[] elements)
         {
             if (queue == null)
             {
@@ -59,7 +59,7 @@ namespace TestProject1
 
         internal static bool HasSameElementsAtIndeces<T>(this Queue<T> sourceCollection, Queue<T> targetCollection)
         {
-            bool result = sourceCollection.Count == targetCollection.Count;
+            bool result = sourceCollection?.Count == targetCollection?.Count;
 
             if (result)
             {
@@ -114,7 +114,7 @@ namespace TestProject1
                 }
             }
 
-            return result;s
+            return result;
         }
     }
 }

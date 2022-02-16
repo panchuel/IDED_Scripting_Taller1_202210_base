@@ -15,14 +15,14 @@ namespace TestProject1
 
         internal static Stack<int> GetNextGreaterValue(Stack<int> sourceStack)
         {
-            Stack<int> result = new Stack<int>();
+            Stack<int> result = null;
 
             return result;
         }
 
         internal static Dictionary<int, EValueType> FillDictionaryFromSource(int[] sourceArr)
         {
-            Dictionary<int, EValueType> result = new Dictionary<int, EValueType>();
+            Dictionary<int, EValueType> result = null;
 
             return result;
         }
@@ -34,7 +34,7 @@ namespace TestProject1
 
         internal static Dictionary<int, EValueType> SortDictionaryRegistries(Dictionary<int, EValueType> sourceDict)
         {
-            Dictionary<int, EValueType> result = new Dictionary<int, EValueType>();
+            Dictionary<int, EValueType> result = null;
 
             return result;
         }
@@ -48,7 +48,7 @@ namespace TestProject1
 
         internal static bool AddNewTicket(Queue<Ticket> targetQueue, Ticket ticket)
         {
-            bool result = true;
+            bool result = false;
 
             return result;
         }        
