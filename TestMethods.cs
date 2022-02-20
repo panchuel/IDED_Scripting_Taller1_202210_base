@@ -16,11 +16,11 @@ namespace TestProject1
         internal static Stack<int> GetNextGreaterValue(Stack<int> sourceStack)
         {
             int[] copia = new int[sourceStack.Count];
-            sourceStack.CopyTo(copia, 0);                                                        //Convierte el source en un arreglo para poder hacerle una copia profunda
-            Stack<int> copySource = new Stack<int>();                                            //Pila donde se guarda la copia de source
+            sourceStack.CopyTo(copia, 0);                                                               //Convierte el source en un arreglo para poder hacerle una copia profunda
+            Stack<int> copySource = new Stack<int>();                                                   //Pila donde se guarda la copia de source
 
             
-            for (int i = copia.Length - 1; i >= 0; i--)                                          //Organiza de nuevo la pila, que se desordenó al convertirla en un arreglo
+            for (int i = copia.Length - 1; i >= 0; i--)                                                 //Organiza de nuevo la pila, que se desordenó al convertirla en un arreglo
             {
                 copySource.Push(copia[i]);
             }
@@ -63,13 +63,13 @@ namespace TestProject1
             sourceArr.CopyTo(copia, 0);
 
 
-            for (int i = 0; i < copia.Length; i++)
+            for (int i = 0; i < copia.Length; i++)                                                      //A través de la copia se realizan las comparaciones para saber si el valor del residuo es:
             {
-                if (copia[i] % 2 == 0 ) result.Add(copia[i], EValueType.Two);                           //Revisar si es Par
-                else if (copia[i] % 3 == 0) result.Add(copia[i], EValueType.Three);                     //Revisar si es Multiplo de 3
-                else if (copia[i] % 5 == 0) result.Add(copia[i], EValueType.Five);                      //Revisar si es Multiplo de 5
-                else if (copia[i] % 7 == 0) result.Add(copia[i], EValueType.Seven);                     //Revisar si es Multiplo de 7 
-                else result.Add(copia[i], EValueType.Prime);                                            //Revisar si es Primo
+                if (copia[i] % 2 == 0 ) result.Add(copia[i], EValueType.Two);                           //Par
+                else if (copia[i] % 3 == 0) result.Add(copia[i], EValueType.Three);                     //Multiplo de 3
+                else if (copia[i] % 5 == 0) result.Add(copia[i], EValueType.Five);                      //Multiplo de 5
+                else if (copia[i] % 7 == 0) result.Add(copia[i], EValueType.Seven);                     //Multiplo de 7 
+                else result.Add(copia[i], EValueType.Prime);                                            //Primo
             }
 
             return result;
@@ -77,14 +77,53 @@ namespace TestProject1
 
         internal static int CountDictionaryRegistriesWithValueType(Dictionary<int, EValueType> sourceDict, EValueType type)
         {
-            return 0;
+            int resutados = 0;
+
+            int[] llaves = new int[sourceDict.Count];
+            sourceDict.Keys.CopyTo(llaves, 0);                                                     
+
+            for (int i = 0; i < llaves.Length; i++)                                                     
+            {
+                if (sourceDict[llaves[i]] == type) resutados++;                                         //Si corresponde al type se suma uno al contador
+            }
+            return resutados;                                                                  
         }
 
         internal static Dictionary<int, EValueType> SortDictionaryRegistries(Dictionary<int, EValueType> sourceDict)
         {
-            Dictionary<int, EValueType> result = null;
+            Dictionary<int, EValueType> result = new Dictionary<int, EValueType>();
 
-            return result;
+            int[] llaves = new int[sourceDict.Count];
+            sourceDict.Keys.CopyTo(llaves, 0);                                                          //Se hace una copia profunda de las llaves
+
+            EValueType[] valores = new EValueType[sourceDict.Count];
+            sourceDict.Values.CopyTo(valores, 0);                                                       //Se hace una copia profunda de los valores
+
+            for (int i = 0; i < llaves.Length; i++)                                                     //Se ordenan los valores de las llaves con bubble sort
+            {
+                for (int j = 0; j < llaves.Length - 1; j++)
+                {
+                    int nuevallave = llaves[j + 1];
+
+                    EValueType nuevovalor = valores[j + 1];
+
+                    if (llaves[j] < nuevallave)
+                    {
+                        llaves[j + 1] = llaves[j];
+                        llaves[j] = nuevallave;
+
+                        valores[j + 1] = valores[j];
+                        valores[j] = nuevovalor;
+                    }
+
+                }
+            }
+            for (int i = 0; i < llaves.Length; i++)                                                     //Se añaden al diccionario las llaves ordenadas con sus respectivos valores
+            {
+                result.Add(llaves[i], valores[i]);
+            }
+
+            return result;//doy el resultado
         }
 
         internal static Queue<Ticket>[] ClassifyTickets(List<Ticket> sourceList)
