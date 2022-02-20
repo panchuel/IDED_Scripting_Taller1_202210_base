@@ -76,7 +76,39 @@ namespace TestProject1
 
         internal static Queue<Ticket>[] ClassifyTickets(List<Ticket> sourceList)
         {
-            Queue<Ticket>[] result = null;
+            Queue<Ticket>[] result = new Queue<Ticket>[3];                                              // Los 3 arreglos que piden devolver en el problema
+
+            Ticket[] copia = new Ticket[sourceList.Count];                                              //Copia profunda de la lista fuente
+            sourceList.CopyTo(copia, 0);
+
+            Queue<Ticket> pago = new Queue<Ticket>(), suscripcion = new Queue<Ticket>(), cancelacion = new Queue<Ticket>();
+            int turnoSiguiente = 0;
+
+            for (int i = 0; i < copia.Length; i++)                                                      //Se ordenan los turnos usando Bubble Sort (porque es el unico que se usar)
+            {
+                for (int j = 0; j < copia.Length - 1; j++)
+                {
+                    turnoSiguiente = copia[j + 1].Turn;
+                    Ticket siguiente = copia[j + 1];
+
+                    if (copia[j].Turn > turnoSiguiente)
+                    {
+                        copia[j + 1] = copia[j];
+                        copia[j] = siguiente;
+                    }
+                }
+            }
+
+            for (int i = 0; i < copia.Length; i++)                                                      //Se asignan los turnos a las colas correspondientes
+            {
+                if (copia[i].RequestType == Ticket.ERequestType.Payment) pago.Enqueue(copia[i]);
+                else if (copia[i].RequestType == Ticket.ERequestType.Subscription) suscripcion.Enqueue(copia[i]);
+                else cancelacion.Enqueue(copia[i]);
+            }
+
+            result[0] = pago;
+            result[1] = suscripcion;
+            result[2] = cancelacion;
 
             return result;
         }
@@ -84,6 +116,13 @@ namespace TestProject1
         internal static bool AddNewTicket(Queue<Ticket> targetQueue, Ticket ticket)
         {
             bool result = false;
+
+            Ticket.ERequestType tipoCola = targetQueue.Peek().RequestType;                              //Se revisa el elemento de RequestType de quien se quiere añadir el ticket y si coinside con alguno de los tipos que hay en tipoCola
+            if(ticket.RequestType == tipoCola)
+            {
+                if (ticket.Turn > 0 && ticket.Turn < 100) result = true;
+                else result = false;
+            }
 
             return result;
         }        
