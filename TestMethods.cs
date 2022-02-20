@@ -15,14 +15,14 @@ namespace TestProject1
 
         internal static Stack<int> GetNextGreaterValue(Stack<int> sourceStack)
         {
-            int[] stackToArray = new int[sourceStack.Count];
-            sourceStack.CopyTo(stackToArray, 0);                                                        //Convierte el source en un arreglo para poder hacerle una copia profunda
-            Stack<int> copySource = new Stack<int>();                                                   //Pila donde se guarda la copia de source
+            int[] copia = new int[sourceStack.Count];
+            sourceStack.CopyTo(copia, 0);                                                        //Convierte el source en un arreglo para poder hacerle una copia profunda
+            Stack<int> copySource = new Stack<int>();                                            //Pila donde se guarda la copia de source
 
             
-            for (int i = stackToArray.Length - 1; i >= 0; i--)                                          //Organiza de nuevo la pila, que se desordenó al convertirla en un arreglo
+            for (int i = copia.Length - 1; i >= 0; i--)                                          //Organiza de nuevo la pila, que se desordenó al convertirla en un arreglo
             {
-                copySource.Push(stackToArray[i]);
+                copySource.Push(copia[i]);
             }
 
             Stack<int> result = new Stack<int>();                                                       
@@ -57,7 +57,20 @@ namespace TestProject1
 
         internal static Dictionary<int, EValueType> FillDictionaryFromSource(int[] sourceArr)
         {
-            Dictionary<int, EValueType> result = null;
+            Dictionary<int, EValueType> result = new Dictionary<int, EValueType>();                     //Diccionario que pide el problema
+
+            int[] copia = new int[sourceArr.Length];                                                    //Copia profunda del source
+            sourceArr.CopyTo(copia, 0);
+
+
+            for (int i = 0; i < copia.Length; i++)
+            {
+                if (copia[i] % 2 == 0 ) result.Add(copia[i], EValueType.Two);                           //Revisar si es Par
+                else if (copia[i] % 3 == 0) result.Add(copia[i], EValueType.Three);                     //Revisar si es Multiplo de 3
+                else if (copia[i] % 5 == 0) result.Add(copia[i], EValueType.Five);                      //Revisar si es Multiplo de 5
+                else if (copia[i] % 7 == 0) result.Add(copia[i], EValueType.Seven);                     //Revisar si es Multiplo de 7 
+                else result.Add(copia[i], EValueType.Prime);                                            //Revisar si es Primo
+            }
 
             return result;
         }
